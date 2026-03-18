@@ -1,6 +1,6 @@
 # 🏦 Bakong Transaction Verifier
 
-A sleek Next.js 15 app to verify Bakong (NBC Cambodia) payments.  
+A sleek Next.js 16 app to verify Bakong (NBC Cambodia) payments.  
 Upload a receipt → OCR reads the hash → verified instantly against the Bakong API.
 
 **No API keys required.** OCR is 100% free via Tesseract.js (runs in-browser).
@@ -86,8 +86,8 @@ Step 3: Click "Verify Transaction"
 
 ## Tech Stack
 
-- **Next.js 15** — App Router
+- **Next.js 16** — App Router
 - **Tesseract.js 5** — Free in-browser OCR
-- **Tailwind CSS 3** — Styling
+- **Tailwind CSS 4** — Styling
 - **Bakong NBC API** — Public, no auth required
 - **TypeScript** — Full type safety
