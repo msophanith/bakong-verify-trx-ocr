@@ -12,6 +12,12 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const clientIp = req.headers.get("x-forwarded-for") || "";
+  const userAgent =
+    req.headers.get("user-agent") ||
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
+  const acceptLanguage = req.headers.get("accept-language") || "en-US,en;q=0.9";
+
   try {
     const response = await fetch(
       "https://api-bakong.nbc.gov.kh/local/v1/check_transaction_by_short_hash",
@@ -20,7 +26,7 @@ export async function POST(req: NextRequest) {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
           Accept: "application/json, text/plain, */*",
-          "Accept-Language": "en-US,en;q=0.9",
+          "Accept-Language": acceptLanguage,
           Origin: "https://api-bakong.nbc.gov.kh",
           Referer: "https://api-bakong.nbc.gov.kh/",
           "Sec-Ch-Ua":
@@ -30,8 +36,8 @@ export async function POST(req: NextRequest) {
           "Sec-Fetch-Dest": "empty",
           "Sec-Fetch-Mode": "cors",
           "Sec-Fetch-Site": "same-site",
-          "User-Agent":
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+          "User-Agent": userAgent,
+          "X-Forwarded-For": clientIp,
         },
         body: JSON.stringify({ hash, amount, currency }),
       },
