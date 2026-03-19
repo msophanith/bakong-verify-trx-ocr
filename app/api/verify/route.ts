@@ -17,6 +17,7 @@ export async function POST(req: NextRequest) {
     req.headers.get("user-agent") ||
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
   const acceptLanguage = req.headers.get("accept-language") || "en-US,en;q=0.9";
+  const origin = req.headers.get("origin") || "https://verifybakongtrx.vercel.app";
 
   try {
     const response = await fetch(
@@ -27,8 +28,8 @@ export async function POST(req: NextRequest) {
           "Content-Type": "application/json;charset=UTF-8",
           Accept: "application/json, text/plain, */*",
           "Accept-Language": acceptLanguage,
-          Origin: "https://api-bakong.nbc.gov.kh",
-          Referer: "https://api-bakong.nbc.gov.kh/",
+          Origin: origin,
+          Referer: origin,
           "Sec-Ch-Ua":
             '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
           "Sec-Ch-Ua-Mobile": "?0",
