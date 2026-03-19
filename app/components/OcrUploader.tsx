@@ -3,12 +3,9 @@
 import { useRef, useState, useCallback } from "react";
 import Tesseract from "tesseract.js";
 import Image from "next/image";
+import LiveScannerModal from "./LiveScannerModal";
 
-interface ExtractedData {
-  hash: string;
-  amount: string;
-  currency: string;
-}
+import type { ExtractedData } from "../types";
 
 interface Props {
   readonly onExtracted: (data: ExtractedData) => void;
@@ -21,6 +18,7 @@ export default function OcrUploader({ onExtracted, onImageChange }: Props) {
   const [scanning, setScanning] = useState(false);
   const [progress, setProgress] = useState(0);
   const [preview, setPreview] = useState<string | null>(null);
+  const [showScanner, setShowScanner] = useState(false);
 
   const processFile = useCallback(
     async (file: File) => {
@@ -149,7 +147,7 @@ export default function OcrUploader({ onExtracted, onImageChange }: Props) {
                   ></path>
                 </svg>
                 <div className="text-white font-medium text-sm drop-shadow-md">
-                  Scanning Receipt... {progress}%
+                  Reading Transaction... {progress}%
                 </div>
                 <div className="w-32 h-1.5 bg-white/20 rounded-full mt-4 overflow-hidden backdrop-blur-sm shadow-inner">
                   <div
@@ -194,15 +192,57 @@ export default function OcrUploader({ onExtracted, onImageChange }: Props) {
             </div>
             <div>
               <p className="text-sm font-semibold text-white/80 mb-1">
-                Upload Bakong Receipt
+                Upload Bakong Transaction
               </p>
               <p className="text-xs text-white/40 font-medium">
                 Drag &amp; drop or click to browse
               </p>
             </div>
+
+            <div className="pt-2 flex justify-center">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowScanner(true);
+                }}
+                className="bg-white/10 hover:bg-white/20 text-white border border-white/10 rounded-full px-5 py-2 text-xs font-semibold flex items-center gap-2 transition-colors relative z-10"
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+                Use Camera Scanner
+              </button>
+            </div>
           </div>
         )}
       </div>
+
+      {showScanner && (
+        <LiveScannerModal
+          onClose={() => setShowScanner(false)}
+          onCapture={(file) => {
+            setShowScanner(false);
+            processFile(file);
+          }}
+        />
+      )}
     </>
   );
 }

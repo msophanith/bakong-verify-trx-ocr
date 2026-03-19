@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "clean": "yarn cache clean --all && rm -rf .next && rm -rf node_modules && yarn install",
+    "deploy": "yarn clean && yarn build && yarn start"
   },
   "dependencies": {
     "next": "16.1.7",

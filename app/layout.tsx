@@ -1,30 +1,43 @@
-import type { Metadata } from 'next';
-import './globals.css';
+import type { Metadata } from "next";
+import { Oxanium } from "next/font/google";
+
+import "./globals.css";
+import bakongLogo from "@/public/bakong-logo.png";
+
+const oxanium = Oxanium({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-oxanium",
+});
 
 export const metadata: Metadata = {
-  title: 'Bakong Verifier · NBC Cambodia',
-  description: 'Verify Bakong payment transactions instantly',
+  title: "Bakong Verifier · NBC Cambodia",
+  description: "Verify Bakong payment transactions instantly",
+  openGraph: {
+    title: "Bakong Verifier · NBC Cambodia",
+    description: "Verify Bakong payment transactions instantly",
+    url: "https://verifybakongtrx.vercel.app/",
+    siteName: "Bakong Verifier",
+    images: [
+      {
+        url: bakongLogo.src,
+        width: bakongLogo.width,
+        height: bakongLogo.height,
+        alt: "Bakong Verifier",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  readonly children: React.ReactNode;
 }) {
   return (
-    <html lang='en'>
-      <head>
-        <link rel='preconnect' href='https://fonts.googleapis.com' />
-        <link
-          rel='preconnect'
-          href='https://fonts.gstatic.com'
-          crossOrigin='anonymous'
-        />
-        <link
-          href='https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap'
-          rel='stylesheet'
-        />
-      </head>
+    <html lang="en" className={`${oxanium.variable} antialiased`}>
       <body>{children}</body>
     </html>
   );

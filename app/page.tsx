@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 import OcrUploader from "./components/OcrUploader";
-import ResultCard, { type TransactionResult } from "./components/ResultCard";
+import ResultCard from "./components/ResultCard";
+import type { TransactionResult } from "./types";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import TransactionForm from "./components/TransactionForm";
 
 export default function Home() {
   const [hash, setHash] = useState("");
@@ -62,25 +66,7 @@ export default function Home() {
   return (
     <main className="min-h-screen flex items-center justify-center p-4 sm:p-8">
       <div className="w-full max-w-md animate-in">
-        {/* Header Section */}
-        <div className="text-center mb-8">
-          <div
-            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/5 border border-white/10 mb-6 shadow-xl backdrop-blur-md"
-            style={{
-              backgroundImage: "url('/bakong-logo.png')",
-              backgroundSize: "60%",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-            }}
-            aria-label="Bakong Logo"
-          />
-          <h1 className="text-3xl font-semibold mb-2 tracking-tight text-white/90">
-            Verify Bakong Transaction
-          </h1>
-          <p className="text-sm text-white/50">
-            Upload your receipt or enter details manually
-          </p>
-        </div>
+        <Header />
 
         {/* Main Card */}
         <div className="premium-card p-6 sm:p-8 mb-6">
@@ -100,82 +86,14 @@ export default function Home() {
                 <div className="flex-1 h-px bg-white/10"></div>
               </div>
 
-              <div className="space-y-5">
-                <div>
-                  <label
-                    htmlFor="hash"
-                    className="label-text flex justify-between"
-                  >
-                    <span>Transaction Hash</span>
-                    <span className="text-white/30 text-xs">8 chars</span>
-                  </label>
-                  <input
-                    id="hash"
-                    className="input-premium font-mono"
-                    type="text"
-                    value={hash}
-                    onChange={(e) =>
-                      setHash(
-                        e.target.value
-                          .toLowerCase()
-                          .replaceAll(/[^0-9a-f]/g, "")
-                          .slice(0, 8),
-                      )
-                    }
-                    placeholder="e.g. 78cde08a"
-                    maxLength={8}
-                    spellCheck={false}
-                  />
-                </div>
-
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="col-span-2">
-                    <label htmlFor="amount" className="label-text">
-                      Amount
-                    </label>
-                    <input
-                      id="amount"
-                      className="input-premium font-mono"
-                      type="number"
-                      value={amount}
-                      onChange={(e) => setAmount(e.target.value)}
-                      placeholder="0.00"
-                      step="0.01"
-                      min="0"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="currency" className="label-text">
-                      Currency
-                    </label>
-                    <div className="relative">
-                      <select
-                        id="currency"
-                        className="input-premium appearance-none cursor-pointer pr-8 font-mono"
-                        value={currency}
-                        onChange={(e) => setCurrency(e.target.value)}
-                      >
-                        <option value="USD">USD</option>
-                        <option value="KHR">KHR</option>
-                      </select>
-                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-white/40">
-                        <svg
-                          width="12"
-                          height="12"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="m6 9 6 6 6-6" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <TransactionForm
+                hash={hash}
+                setHash={setHash}
+                amount={amount}
+                setAmount={setAmount}
+                currency={currency}
+                setCurrency={setCurrency}
+              />
 
               {error && (
                 <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm flex items-start gap-3">
@@ -237,27 +155,7 @@ export default function Home() {
           )}
         </div>
 
-        {/* Footer */}
-        <div className="text-center text-xs text-white/30 space-y-1.5 font-medium">
-          <p>
-            API from{" "}
-            <a
-              href="https://api-bakong.nbc.gov.kh/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/50 hover:text-white"
-            >
-              Bakong Open API
-            </a>
-          </p>
-          <div className="flex items-center justify-center gap-2">
-            <span>
-              OCR Verification by <b>tesseract.js</b>
-            </span>
-            <span>|</span>
-            <span>Easy &bull; Secure &bull; Private</span>
-          </div>
-        </div>
+        <Footer />
       </div>
     </main>
   );
