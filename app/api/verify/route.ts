@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+export const runtime = "edge"; // Switch to Edge runtime to bypass some IP-based WAF blocks on Vercel
+
 export async function POST(req: NextRequest) {
   const { hash, amount, currency } = await req.json();
 
@@ -17,11 +19,19 @@ export async function POST(req: NextRequest) {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          accept: "application/json, text/plain, */*",
-          origin: "https://api-bakong.nbc.gov.kh",
-          referer: "https://api-bakong.nbc.gov.kh/",
-          "user-agent":
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
+          Accept: "application/json, text/plain, */*",
+          "Accept-Language": "en-US,en;q=0.9",
+          Origin: "https://api-bakong.nbc.gov.kh",
+          Referer: "https://api-bakong.nbc.gov.kh/",
+          "Sec-Ch-Ua":
+            '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
+          "Sec-Ch-Ua-Mobile": "?0",
+          "Sec-Ch-Ua-Platform": '"macOS"',
+          "Sec-Fetch-Dest": "empty",
+          "Sec-Fetch-Mode": "cors",
+          "Sec-Fetch-Site": "same-site",
+          "User-Agent":
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
         },
         body: JSON.stringify({ hash, amount, currency }),
       },
