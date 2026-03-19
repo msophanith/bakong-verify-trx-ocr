@@ -17,31 +17,31 @@ export async function POST(req: NextRequest) {
     req.headers.get("user-agent") ||
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
   const acceptLanguage = req.headers.get("accept-language") || "en-US,en;q=0.9";
-  const origin = req.headers.get("origin") || "https://verifybakongtrx.vercel.app";
+  const origin = req.headers.get('origin') || process.env.NEXT_PUBLIC_API_URL || "";
 
   try {
     const response = await fetch(
-      "https://api-bakong.nbc.gov.kh/local/v1/check_transaction_by_short_hash",
+      `${process.env.NEXT_PUBLIC_API_URL}local/v1/check_transaction_by_short_hash`,
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          Accept: "application/json, text/plain, */*",
-          "Accept-Language": acceptLanguage,
+          'Content-Type': 'application/json;charset=UTF-8',
+          Accept: 'application/json, text/plain, */*',
+          'Accept-Language': acceptLanguage,
           Origin: origin,
           Referer: origin,
-          "Sec-Ch-Ua":
+          'Sec-Ch-Ua':
             '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
-          "Sec-Ch-Ua-Mobile": "?0",
-          "Sec-Ch-Ua-Platform": '"macOS"',
-          "Sec-Fetch-Dest": "empty",
-          "Sec-Fetch-Mode": "cors",
-          "Sec-Fetch-Site": "same-site",
-          "User-Agent": userAgent,
-          "X-Forwarded-For": clientIp,
+          'Sec-Ch-Ua-Mobile': '?0',
+          'Sec-Ch-Ua-Platform': '"macOS"',
+          'Sec-Fetch-Dest': 'empty',
+          'Sec-Fetch-Mode': 'cors',
+          'Sec-Fetch-Site': 'same-site',
+          'User-Agent': userAgent,
+          'X-Forwarded-For': clientIp,
         },
         body: JSON.stringify({ hash, amount, currency }),
-      },
+      }
     );
 
     if (!response.ok) {
