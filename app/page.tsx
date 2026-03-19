@@ -35,9 +35,14 @@ export default function Home() {
     setLoading(true);
     setResult(null);
     try {
-      const res = await fetch("/api/verify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch('/api/verify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json, text/plain, */*',
+          'Accept-Language': 'en-US,en;q=0.9',
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_BAKONG_API_TOKEN}`,
+        },
         body: JSON.stringify({
           hash: hash.trim(),
           amount: Number.parseFloat(amount),
