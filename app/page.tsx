@@ -103,7 +103,7 @@ export default function Home() {
               {error && (
                 <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm flex items-start gap-3">
                   <svg
-                    className="mt-0.5 flex-shrink-0"
+                    className="mt-0.5 shrink-0"
                     width="16"
                     height="16"
                     viewBox="0 0 24 24"
